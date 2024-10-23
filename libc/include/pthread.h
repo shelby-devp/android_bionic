@@ -283,7 +283,11 @@ int pthread_spin_unlock(pthread_spinlock_t* _Nonnull __spinlock) __INTRODUCED_IN
 pthread_t pthread_self(void) __attribute_const__;
 
 #if defined(__USE_GNU)
+// This causes issues with autoconf detection in loguru
+// https://github.com/android/ndk/issues/2081
+#if __ANDROID_API__ >= 26
 int pthread_getname_np(pthread_t __pthread, char* _Nonnull __buf, size_t __n) __INTRODUCED_IN(26);
+#endif
 #endif
 /* TODO: this should be __USE_GNU too. */
 int pthread_setname_np(pthread_t __pthread, const char* _Nonnull __name);
